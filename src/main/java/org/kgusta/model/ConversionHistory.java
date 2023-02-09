@@ -13,16 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class ConversionHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Long conversionHistoryId;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conversionHistory")
     private List<Conversion> conversion = new ArrayList<>();
 }

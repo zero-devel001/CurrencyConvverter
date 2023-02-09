@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="currency_converter@localhost" uuid="9d5f0f4a-d617-4b39-a2b9-49a71e752135">
+    <data-source source="LOCAL" name="currency_converter@localhost" uuid="ca0f9a73-3ddb-4edd-b035-dd4a9e9c730e">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

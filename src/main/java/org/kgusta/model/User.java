@@ -10,8 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Builder
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,4 @@ public class User {
     private String username;
 
     private String password;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private ConversionHistory conversionHistory;}
+}

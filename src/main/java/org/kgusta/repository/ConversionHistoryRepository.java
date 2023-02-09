@@ -11,12 +11,12 @@ public class ConversionHistoryRepository extends Repository<ConversionHistory>{
     public ConversionHistoryRepository() {
         super(ConversionHistory.class);
     }
-    public List<Conversion> findByUser(User user) {
+    public ConversionHistory findByUser(User user) {
         Session session  = sessionFactory.openSession();
         session.beginTransaction();
-        List<Conversion>conversions =  session.createQuery("SELECT c FROM Conversion c WHERE c.user = :user", Conversion.class)
+        ConversionHistory conversions =  session.createQuery("SELECT c FROM ConversionHistory c WHERE c.user = : user", ConversionHistory.class)
                 .setParameter("user", user)
-                .getResultList();
+                .getSingleResult();
         session.getTransaction().commit();
         return conversions;
     }

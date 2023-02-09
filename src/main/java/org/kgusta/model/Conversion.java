@@ -21,11 +21,15 @@ public class Conversion {
     @ManyToOne
     @JoinColumn(name = "exchange_rate_id")
     private ExchangeRate exchangeRate;
-
     private BigDecimal amount;
     private BigDecimal result;
     private LocalDateTime conversionDateTime;
     public BigDecimal getResult() {
         return  amount.multiply(exchangeRate.getRate());
     }
+    @ManyToOne
+    @JoinColumn(name = "conversion_history_id")
+    private ConversionHistory conversionHistory;
+
+
 }

@@ -19,7 +19,8 @@ public class Repository<T> {
 
         sessionFactory = DBConfig.getSessionFactory();
     }
-    public T finUserById(int id) {
+
+    public T findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         T entity = session.get(tClass, id);
@@ -40,6 +41,7 @@ public class Repository<T> {
         session.update(entity);
         session.getTransaction().commit();
     }
+
     //create updateById method
     public void updateById(int id) {
         Session session = sessionFactory.getCurrentSession();
@@ -48,6 +50,7 @@ public class Repository<T> {
         session.update(entity);
         session.getTransaction().commit();
     }
+
     //create deleteById method
     public void deleteById(int id) {
         Session session = sessionFactory.getCurrentSession();
@@ -56,17 +59,20 @@ public class Repository<T> {
         session.remove(entity);
         session.getTransaction().commit();
     }
+
     public void delete(T entity) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.delete(entity);
         session.getTransaction().commit();
     }
+
     public List<T> findAll() {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        List<T> entitiesList =  session.createQuery("from " + tClass.getName()).list();
+        List<T> entitiesList = session.createQuery("from " + tClass.getName()).list();
         session.getTransaction().commit();
         return entitiesList;
     }
+
 }

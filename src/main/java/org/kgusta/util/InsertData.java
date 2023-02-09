@@ -4,6 +4,7 @@ import org.kgusta.model.*;
 import org.kgusta.repository.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class InsertData {
@@ -18,8 +19,9 @@ public class InsertData {
         fillUsers();
         fillCurrency();
         fillExchangeRate();
-        User user = userRepository.findByUsername("user1");
-        user.getConversionHistory().getConversion().stream().forEach(System.out::println);
+
+        conversionHistoryRepository.findByUser(userRepository.findById(1L))
+                .getConversion().stream().forEach(System.out::println);
 
     }
     public static void fillUsers() {
@@ -80,31 +82,35 @@ public class InsertData {
     }
 
     public static void fillExchangeRate() {
-        ExchangeRateRepository exchangeRateRepository = new ExchangeRateRepository();
-        Currency dollar = currencyRepository.findByCode("USD");
-        Currency euro = currencyRepository.findByCode("EUR");
-
-        ExchangeRate exchangeRate = ExchangeRate.builder()
-                .fromCurrency(dollar)
-                .toCurrency(euro)
-                .rate(BigDecimal.valueOf(0.8))
-                .build();
-
-        exchangeRateRepository.save(exchangeRate);
         User user = userRepository.findByUsername("user1");
 
-        Conversion conversion = Conversion.builder()
-                .exchangeRate(exchangeRate)
-                .amount(BigDecimal.valueOf(1000))
-                .build();
-        conversionRepository.save(conversion);
-        ConversionHistory conversionHistory = ConversionHistory.builder()
-                .user(user)
-                .build();
+    // Get the from and to currencies for the conversion
+        Currency fromCurrency = currencyRepository.findByCode("USD");
+        Currency toCurrency = currencyRepository.findByCode("EUR");
 
-        user.setConversionHistory(conversionHistory);
+    // Get the exchange rate for the from and to currencies
+        ExchangeRate exchangeRate = ExchangeRate.builder()
+                .fromCurrency(fromCurrency)
+                .toCurrency(toCurrency)
+                .rate(BigDecimal.valueOf(0,8))
+                .build();
+        exchangeRateRepository.save(exchangeRate);
+
+        Conversion conversion = new Conversion();
+        conversion.setExchangeRate(exchangeRate);
+        conversion.setAmount(new BigDecimal("100.0"));
+        conversion.setResult(conversion.getAmount().multiply(exchangeRate.getRate()));
+        conversion.setConversionDateTime(LocalDateTime.now());
+
+        conversionRepository.save(conversion);
+
+        ConversionHistory conversionHistory = new ConversionHistory();
+        conversionHistory.setUser(user);
         conversionHistory.getConversion().add(conversion);
+
         conversionHistoryRepository.save(conversionHistory);
+
+        userRepository.update(user);
 
 
     }
