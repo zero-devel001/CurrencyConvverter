@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-223.8617.56">
+    <data-source name="currency_converter@localhost" uuid="9d5f0f4a-d617-4b39-a2b9-49a71e752135">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>posgtres</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
