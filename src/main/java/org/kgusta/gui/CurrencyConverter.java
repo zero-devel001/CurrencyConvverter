@@ -1,7 +1,7 @@
-package currencyConverter;
+package org.kgusta.gui;
 
-import java.awt.EventQueue;
-import javax.swing.UIManager;
+import javax.swing.*;
+import java.awt.*;
 
 public class CurrencyConverter {
 

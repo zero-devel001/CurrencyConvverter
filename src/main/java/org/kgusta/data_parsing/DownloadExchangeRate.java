@@ -1,4 +1,4 @@
-package currencyConverter.util;
+package org.kgusta.data_parsing;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,23 +17,24 @@ public class DownloadExchangeRate {
     }
     public static void loadDailyExchangeRate() {
         try {
-            new DownloadExchangeRate().downloadFile("https://www.nbkr.kg/XML/daily.xml", generateNameByDate(),"daily");
+            new DownloadExchangeRate().downloadFile("https://www.nbkr.kg/XML/daily.xml", "daily");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
     public static void loadWeeklyExchangeRate() {
         try {
-            new DownloadExchangeRate().downloadFile("https://www.nbkr.kg/XML/weekly.xml", generateNameByDate(),"weekly");
+            new DownloadExchangeRate().downloadFile("https://www.nbkr.kg/XML/weekly.xml", "weekly");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
-    public void downloadFile(String fileUrl,String filename,String period) throws IOException, InterruptedException {
+    public void downloadFile(String fileUrl,String period) throws IOException, InterruptedException {
         HttpClient httpClient = HttpClient.newBuilder().build();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(fileUrl)).build();
 
-        Path path = Path.of("./data/" + generateNameByDate() + ".xml"); // Path to save file
+        String folder = "./src/main/resources/data/" + period + "/";
+        Path path = Path.of( folder  + period + ".xml"); // Path to save file
         HttpResponse<Path> response = httpClient.send(request, HttpResponse.BodyHandlers.ofFile(path));
 
         int statusCode = response.statusCode();
@@ -43,8 +44,6 @@ public class DownloadExchangeRate {
         }
     }
 
-    public static String generateNameByDate() {
-        return "exchange-rate." + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-    }
+
 
 }

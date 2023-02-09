@@ -1,4 +1,4 @@
-package org.kgusta.db;
+package org.kgusta.config;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 import org.kgusta.model.*;
 
 
-public class DbConfig {
+public class DBConfig {
     private static SessionFactory sessionFactory;
     static  {
         init();
@@ -29,26 +29,5 @@ public class DbConfig {
         return sessionFactory;
     }
     //method Session creation
-    public static void fillDB() {
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-
-        User user1 =  User.builder()
-                .username("user1")
-                .password("password1")
-                .build();
-        User user2 =  User.builder()
-                .username("user2")
-                .password("password2")
-                .build();
-        User user3 =  User.builder()
-                .username("user3")
-                .password("password3")
-                .build();
-        session.persist(user1);
-        session.persist(user2);
-        session.persist(user3);
-        session.getTransaction().commit();
-    }
 
 }

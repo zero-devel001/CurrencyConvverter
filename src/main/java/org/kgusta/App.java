@@ -1,5 +1,8 @@
 package org.kgusta;
 
+import org.kgusta.repository.UserRepository;
+import org.kgusta.util.InsertData;
+
 /**
  * Hello world!
  *
@@ -8,6 +11,10 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        InsertData.fillUsers();
+        UserRepository userRepository = new UserRepository();
+        System.out.println(userRepository.findAll().toString());
     }
+
+
 }

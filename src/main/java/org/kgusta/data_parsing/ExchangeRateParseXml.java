@@ -1,4 +1,4 @@
-package currencyConverter.util;
+package org.kgusta.data_parsing;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,11 +15,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ExchangeRateParseXml {
-    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        String filename = "./data/daily/exchange-rate." + date + ".xml";
-        System.out.println(filename);
-        File file = new File(filename);
+    public static final String DAILYRATE = "./src/main/resources/data/daily/daily.xml";
+
+    public static void main(String[] args) {
+        try {
+            extractDailyRate();
+        } catch (IOException | SAXException | ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void extractDailyRate() throws IOException, SAXException, ParserConfigurationException {
+        System.out.println(DAILYRATE);
+        File file = new File(DAILYRATE);
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();

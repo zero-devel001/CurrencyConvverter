@@ -1,8 +1,8 @@
-package org.kgusta.db;
+package org.kgusta.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.kgusta.model.User;
+import org.kgusta.config.DBConfig;
 
 import java.util.List;
 
@@ -13,10 +13,11 @@ public class Repository<T> {
         this.tClass = tClass;
     }
 
-    protected SessionFactory sessionFactory = DbConfig.getSessionFactory();
+    protected SessionFactory sessionFactory = DBConfig.getSessionFactory();
 
     public Repository() {
-        sessionFactory = DbConfig.getSessionFactory();
+
+        sessionFactory = DBConfig.getSessionFactory();
     }
     public T finUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
@@ -26,20 +27,36 @@ public class Repository<T> {
         return entity;
     }
 
-    public void saveUser(T entity) {
+    public void save(T entity) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.save(entity);
         session.getTransaction().commit();
     }
 
-    public void updateUser(T entity) {
+    public void update(T entity) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.update(entity);
         session.getTransaction().commit();
     }
-    public void deleteUser(T entity) {
+    //create updateById method
+    public void updateById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        T entity = session.get(tClass, id);
+        session.update(entity);
+        session.getTransaction().commit();
+    }
+    //create deleteById method
+    public void deleteById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        T entity = session.get(tClass, id);
+        session.remove(entity);
+        session.getTransaction().commit();
+    }
+    public void delete(T entity) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.delete(entity);
