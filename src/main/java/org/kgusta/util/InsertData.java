@@ -21,7 +21,7 @@ public class InsertData {
         fillExchangeRate();
 
         conversionHistoryRepository.findByUser(userRepository.findById(1L))
-                .getConversion().stream().forEach(System.out::println);
+                .getConversion().forEach(System.out::println);
 
     }
     public static void fillUsers() {
@@ -92,7 +92,7 @@ public class InsertData {
         ExchangeRate exchangeRate = ExchangeRate.builder()
                 .fromCurrency(fromCurrency)
                 .toCurrency(toCurrency)
-                .rate(BigDecimal.valueOf(0,8))
+                .rate(new BigDecimal(0.8d))
                 .build();
         exchangeRateRepository.save(exchangeRate);
 
@@ -103,14 +103,12 @@ public class InsertData {
         conversion.setConversionDateTime(LocalDateTime.now());
 
         conversionRepository.save(conversion);
-
         ConversionHistory conversionHistory = new ConversionHistory();
         conversionHistory.setUser(user);
         conversionHistory.getConversion().add(conversion);
-
+        conversion.setConversionHistory(conversionHistory);
         conversionHistoryRepository.save(conversionHistory);
 
-        userRepository.update(user);
 
 
     }

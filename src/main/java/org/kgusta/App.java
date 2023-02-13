@@ -11,7 +11,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        InsertData.fillUsers();
         UserRepository userRepository = new UserRepository();
         System.out.println(userRepository.findAll().toString());
     }
